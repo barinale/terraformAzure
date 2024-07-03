@@ -90,3 +90,30 @@ resource "azurerm_network_interface" "itr-01" {
 
 
 
+resource "azurerm_network_security_group" "secrty-Group01" {
+  name                = "acceptanceTestSecurityGroup1"
+  location            = local.location
+  resource_group_name = var.resource-group-name
+
+  security_rule {
+    name                       = "test123"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Ssh"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  tags = {
+    environment = local.env
+  }
+  depends_on = [ azurerm_resource_group.rg ]
+}
+
+resource "azurerm_subnet_network_security_group_association" "grouSubSec-01" {
+  subnet_id                 = azurerm_subnet.subnet-01.id
+  network_security_group_id = azurerm_network_security_group.secrty-Group01.id
+}
