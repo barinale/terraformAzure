@@ -1,5 +1,5 @@
 variable "resource-group-name" {
-  default = "test-med-iac-222"
+  default = "learn-01d2b7ae-e5c4-4b75-beba-70c706a36ec7"
 }
 variable "location" {
   default = "westeurope"
